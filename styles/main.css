@@ -1,0 +1,73 @@
+@font-face {
+font-family: LibertyBT;
+src: url("../fonts/Liberty BT.otf") format("opentype");
+}
+body {
+    background-image: url("../images/bg.jpg"); 
+}
+
+.header{
+    background-color: #6e280e;
+    border-radius: 3px;
+    margin: 5px 0;
+    overflow-x: hidden;
+    font-family: LibertyBT;    
+}
+.header>div:first-child{
+    border-bottom: 5px solid #cb5c53;
+    margin-left: 0;
+}
+/*костыль для рамки-изображения в колонках*/
+.logo{
+    border: 40px solid transparent;
+    border-image: url("../images/logoBorder.png") 35 35 stretch;
+    margin-right: 15px;
+    text-align: center;
+    color: white;
+    font-size: 70px;
+    font-weight: bold;
+    line-height: 0.5;
+}
+@media screen and (max-width: 992px)and (min-width: 769px) {
+    .logo{
+    font-size: 60px;
+    line-height: 1;
+    }
+}
+@media screen and (max-width: 768px) {
+    .logo{
+    font-size: 30px;
+    line-height: 1;
+    }
+}
+.shopingCart{
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+.shopingCart:hover{
+    background-color: #cd844d
+}
+.shopingCart div{
+    text-align: justify;
+}
+.navigation{
+    background-color: #6e280e;
+    margin: 0 -15px;
+    font-size: 52px;
+    color: white;
+}
+.navigation a{
+    text-align: center;
+    cursor: pointer;
+}
+.navigation a:hover{
+    background-color: #cd844d
+}
+
+.contentRow{
+    background-color: rgba(255,255,255,.8);
+    border-radius: 3px;
+    margin: 5px 0;
+    padding: 5px;
+}

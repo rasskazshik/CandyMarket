@@ -23,12 +23,24 @@ session_start();
 </head>
 <body>
     <div class="container">
-        <!--навигация-->
-        <div class="row navigation no-gutters">
-            <a class="container navToCatalog active"><div>Каталог</div></a>
-            <a class="container navToActions"><div>Акции</div></a>
-            <a class="container navToContacts"><div>Контактные данные</div></a>
-            <a class="container navToProcessOrder"><div>Корзина</div></a>
+        <div class="header">
+            <div class="row">
+                <div class="logo col-md-8">
+                    <div>Магазинушко Аленка</div>
+                </div>
+                <div class="shopingCart col-md-4 row align-items-center">
+                    <div class="col-3">
+                    <img class="img-fluid" src="images/cart.png">
+                    </div>
+                    <div class="col-9">Стоимость товаров в корзине: 100500 руб.</div>
+                </div>
+            </div>
+            <!--навигация-->
+            <div class="row navigation no-gutters">
+                <a class="col-md container navToCatalog active"><div>Каталог</div></a>
+                <a class="col-md container navToActions"><div>Акции</div></a>
+                <a class="col-md container navToContacts"><div>Контактные данные</div></a>
+            </div>  
         </div>
         <!--контейнер для выгрузки контента-->
         <div class="row no-gutters content contentRow">

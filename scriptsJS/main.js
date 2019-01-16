@@ -86,7 +86,7 @@ function NavToProcessOrder(){
             }); 
        });
 }
-$(".navToProcessOrder").on("click",function(event){
+$(".shopingCart").on("click",function(event){
     event.preventDefault();
     if(navNotAnimate&&!$(".navToProcessOrder").hasClass("active"))
     {  
