@@ -7,9 +7,9 @@ function NavToCatalog(){
     $(".navigation a").removeClass("active");
     $(".navToCatalog").addClass("active");
     $.post("content/catalog.php",function(responce){
-        $(".contentRow").fadeToggle(500,function(){
+        $(".contentRow").fadeToggle(700,function(){
             $(".contentRow").html(responce);
-            $(".contentRow").fadeToggle(500,function(){                    
+            $(".contentRow").fadeToggle(700,function(){                    
                 navNotAnimate=true;
             });
         }); 
@@ -31,9 +31,9 @@ function NavToActions(){
     $(".navigation a").removeClass("active");
     $(".navToActions").addClass("active");
     $.post("content/actions.php",function(responce){
-        $(".contentRow").fadeToggle(500,function(){
+        $(".contentRow").fadeToggle(700,function(){
             $(".contentRow").html(responce);
-            $(".contentRow").fadeToggle(500,function(){
+            $(".contentRow").fadeToggle(700,function(){
                 navNotAnimate=true;
             });
         }); 
@@ -55,9 +55,9 @@ function NavToContacts(){
         $(".navigation a").removeClass("active");
         $(".navToContacts").addClass("active");
         $.post("content/contacts.php",function(responce){
-            $(".contentRow").fadeToggle(500,function(){
+            $(".contentRow").fadeToggle(700,function(){
                 $(".contentRow").html(responce);
-                $(".contentRow").fadeToggle(500,function(){
+                $(".contentRow").fadeToggle(700,function(){
                     navNotAnimate=true;
                 });
             }); 
@@ -78,9 +78,9 @@ function NavToProcessOrder(){
         $(".navigation a").removeClass("active");
         $(".navToProcessOrder").addClass("active");
         $.post("content/processOrder.php",function(responce){
-            $(".contentRow").fadeToggle(500,function(){
+            $(".contentRow").fadeToggle(700,function(){
                 $(".contentRow").html(responce);
-                $(".contentRow").fadeToggle(500,function(){
+                $(".contentRow").fadeToggle(700,function(){
                     navNotAnimate=true;
                 });
             }); 
