@@ -25,10 +25,10 @@ session_start();
     <div class="container">
         <div class="header">
             <div class="row">
-                <div class="logo col-md-8">
+                <div class="logo col-lg-8">
                     <div>Магазинушко Аленка</div>
                 </div>
-                <div class="shopingCart col-md-4 row align-items-center">
+                <div class="shopingCart col-lg-4 row align-items-center">
                     <div class="col-3">
                     <img class="img-fluid" src="images/cart.png">
                     </div>
