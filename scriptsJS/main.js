@@ -7,9 +7,9 @@ function NavToCatalog(){
     $(".navigation a").removeClass("active");
     $(".navToCatalog").addClass("active");
     $.post("content/catalog.php",function(responce){
-        $(".contentRow").slideToggle(500,function(){
+        $(".contentRow").fadeToggle(500,function(){
             $(".contentRow").html(responce);
-            $(".contentRow").slideToggle(500,function(){                    
+            $(".contentRow").fadeToggle(500,function(){                    
                 navNotAnimate=true;
             });
         }); 
@@ -25,15 +25,15 @@ $(".navToCatalog").on("click",function(event){
     }
 });
 
-//выгрузка контента со списком торговых точек
+//выгрузка контента с акциями
 function NavToActions(){ 
     navNotAnimate=false;
     $(".navigation a").removeClass("active");
     $(".navToActions").addClass("active");
     $.post("content/actions.php",function(responce){
-        $(".contentRow").slideToggle(500,function(){
+        $(".contentRow").fadeToggle(500,function(){
             $(".contentRow").html(responce);
-            $(".contentRow").slideToggle(500,function(){
+            $(".contentRow").fadeToggle(500,function(){
                 navNotAnimate=true;
             });
         }); 
@@ -49,15 +49,15 @@ $(".navToActions").on("click",function(event){
     }
 });
 
-//выгрузка контента со списком предложений торговой сети Пятерочка
+//выгрузка контента с контактной информацией
 function NavToContacts(){     
         navNotAnimate=false;
         $(".navigation a").removeClass("active");
         $(".navToContacts").addClass("active");
         $.post("content/contacts.php",function(responce){
-            $(".contentRow").slideToggle(500,function(){
+            $(".contentRow").fadeToggle(500,function(){
                 $(".contentRow").html(responce);
-                $(".contentRow").slideToggle(500,function(){
+                $(".contentRow").fadeToggle(500,function(){
                     navNotAnimate=true;
                 });
             }); 
@@ -72,15 +72,15 @@ $(".navToContacts").on("click",function(event){
     }
 });
 
-//выгрузка контента со списком предложений торговой сети Пятерочка
+//выгрузка контента с оформлением заказа
 function NavToProcessOrder(){     
         navNotAnimate=false;
         $(".navigation a").removeClass("active");
         $(".navToProcessOrder").addClass("active");
         $.post("content/processOrder.php",function(responce){
-            $(".contentRow").slideToggle(500,function(){
+            $(".contentRow").fadeToggle(500,function(){
                 $(".contentRow").html(responce);
-                $(".contentRow").slideToggle(500,function(){
+                $(".contentRow").fadeToggle(500,function(){
                     navNotAnimate=true;
                 });
             }); 

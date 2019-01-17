@@ -5,7 +5,7 @@ session_start();
 <html lang = "ru">
 <head>
     <meta charset="utf-8" />
-    <title>Конфетка - магазин сладостей</title>
+    <title>Аленка - магазин сладостей</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" media="screen" href="styles/bootstrap.min.css" />
@@ -50,6 +50,8 @@ session_start();
         <div class="row footer no-gutters">
             <span  class="container"><div>Благодарим Вас за то, что Вы с нами!</div></span>
         </div>
-    </div>   
+    </div> 
+    
+    <!---->
 </body>
 </html>
