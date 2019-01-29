@@ -46,10 +46,6 @@ session_start();
         <div class="row no-gutters content contentRow">
 
         </div>
-        <!--футер-->
-        <div class="row footer no-gutters">
-            <span  class="container"><div>Благодарим Вас за то, что Вы с нами!</div></span>
-        </div>
     </div> 
     
     <!---->
