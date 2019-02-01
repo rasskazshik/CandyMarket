@@ -120,3 +120,5 @@ function Navigate(){
         return;
     }
 }
+
+$(document).ready(Navigate());
