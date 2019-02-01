@@ -122,3 +122,165 @@ function Navigate(){
 }
 
 $(document).ready(Navigate());
+
+//добавление товара в корзину
+function addItemToOffer(id,num)
+{
+    //получаем строку с товарами
+    var offer = $.cookie("offer");
+    //если она пуста
+    if (offer=="")
+    {
+        //добавляем товар
+        var items = id+"#"+num+"/";
+        $.cookie("offer",items);
+    }
+    //если в ней что-то есть
+    else
+    {
+        //массив объектов элементов заказа
+        var itemsList = {}; 
+        //флаг наличия добавляемого товара в списке
+        var exist = false;
+        //формируем массив строк элементов заказа
+        var items = offer.split("/");
+        //перебираем все строки
+        items.forEach(function(item, i, arr) {
+            //разбиваем строку и получаем пару id и num
+            var buff = item.split("#");
+            //формируем объект
+            var offerItem = new Object();
+            //формируем поле id объекта
+            offerItem.id=buff[0];
+            //если добавляемый товар имеется в списке (текущий элемент)
+            if(buff[0]==id)
+            {
+                //флаг что товар в списке
+                exist=true;
+                //формируем поле num объекта
+                //увеличиваем количество товара в списке на указанную величину
+                offerItem.num=Number(buff[1])+Number(num);
+            }
+            //если товар не в списке (текущий элемент)
+            else
+            {
+                //формируем поле num объекта
+                offerItem.num=buff[1];
+            }
+            //добавляем объект в массив объектов элементов заказа
+            itemsList.push(offerItem);
+        });
+        //если товар существовал в списке
+        if(exist)
+        {
+            //уже увеличили его количество на 1
+            //поэтому формируем строку из массива
+            //пустая строка
+            var items = "";
+            itemsList.forEach(function(item, i, arr) {
+                //добавляем элемент к строке
+                items+= item.id+"#"+item.num+"/";
+            });
+            //сохраняем список в куки
+            $.cookie("offer",items);
+        }
+        //если товара в списке не было
+        else
+        {
+            //будет первым
+            var items = offer+id+"#"+num+"/";
+            $.cookie("offer",items);
+        }
+    }
+}
+
+//добавление товара в корзину
+function vemoveItemToOffer(id,num)
+{
+    //получаем строку с товарами
+    var offer = $.cookie("offer");
+    //если она пуста - ничего не делаем
+    if (offer!="")
+    {
+        //массив объектов элементов заказа
+        var itemsList = {}; 
+        //формируем массив строк элементов заказа
+        var items = offer.split("/");
+        //перебираем все строки
+        items.forEach(function(item, i, arr) {
+            //разбиваем строку и получаем пару id и num
+            var buff = item.split("#");
+            //формируем объект
+            var offerItem = new Object();
+
+            //если удаляемый товар имеется в списке (текущий элемент)
+            if(buff[0]==id)
+            {
+                //формируем поле num объекта
+                //уменьшаем количество товара в списке на указанную величину
+                offerItem.num=Number(buff[1])-Number(num);
+                //если оставшееся количество больше нуля
+                if(offerItem.num>0)
+                {
+                    //формируем поле id объекта
+                    offerItem.id=buff[0];
+                    //добавляем объект в массив объектов элементов заказа
+                    itemsList.push(offerItem);
+                }
+            }
+            //если товар не в списке (текущий элемент)
+            else
+            {
+                //формируем поле id объекта
+                offerItem.id=buff[0];
+                //формируем поле num объекта
+                offerItem.num=buff[1];
+                //добавляем объект в массив объектов элементов заказа
+                itemsList.push(offerItem);
+            }            
+        });
+        //формируем строку из массива
+        //пустая строка
+        var items = "";
+        itemsList.forEach(function(item, i, arr) {
+            //добавляем элемент к строке
+            items+= item.id+"#"+item.num+"/";
+        });
+        //сохраняем список в куки
+        $.cookie("offer",items);
+    }
+}
+
+//получение списка товаров (массив объектов с полями id и num)
+function getOfferItems(){
+    //получаем строку с товарами
+    var offer = $.cookie("offer");
+    //если она не пуста
+    if (offer!="")
+    {
+        //массив объектов элементов заказа
+        var itemsList = {}; 
+        //формируем массив строк элементов заказа
+        var items = offer.split("/");
+        //перебираем все строки
+        items.forEach(function(item, i, arr) {
+            //разбиваем строку и получаем пару id и num
+            var buff = item.split("#");
+            //формируем объект
+            var offerItem = new Object();
+            offerItem.id=buff[0];
+            offerItem.num=Number(buff[1]);
+            itemsList.push(offerItem);           
+        });
+        //возвращаем массив объектов заказа
+        return itemsList;
+        
+    }
+    //если пуста
+    else
+    {
+        //массив объектов элементов заказа
+        var itemsList = {};
+        return itemsList;
+    }
+}
