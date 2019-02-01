@@ -139,3 +139,59 @@ body {
     width: 100%;
     margin: auto;
 }
+
+.offerList{
+    max-width: 750px;
+    background-color: rgba(110, 40, 14, .5);
+    padding: 10px !important;
+    border-radius: 3px;
+    font-family: LibertyBT;
+    font-size: 35px;
+}
+
+.offerList li{
+    border-bottom: solid white 1px;
+}
+
+.offerList span{
+    font-family: "Times New Roman";
+    font-style: italic;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.offerList span:hover{
+    font-weight: bolder;
+}
+
+.offerList [type="text"]{
+    color: white;
+    border: none; 
+    border-bottom: 1px solid white;
+    background: transparent;
+    width: 100%;
+}
+
+.offerList [type="text"]:invalid{
+    color:#FFCCCC;
+    box-shadow: none;
+}
+
+.offerList [type="text"]:valid{
+    color:#E2FFBD;
+}
+
+.offerList [type="submit"]{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent;
+    color: white;
+    border: none;
+    border-bottom: solid white 1px;
+    cursor: pointer;
+}
+
+.offerList [type="submit"]:hover{
+    font-weight: bolder;
+}
