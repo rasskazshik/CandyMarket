@@ -49,5 +49,15 @@ session_start();
     </div> 
     
     <!---->
+    
+    <div class="addMerchLayout row align-items-center">
+    <div class="col container ">
+        <form class="setCount">
+            <input type="text" class="countMerch" placeholder="Количество товара">
+            <input type="submit" value="Принять">
+            <input type="button" class="Cancel" value="Отмена">
+        </form>
+    </div>
+    </div>
 </body>
 </html>

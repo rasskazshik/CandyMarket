@@ -129,7 +129,7 @@ function addItemToOffer(id,num)
     //получаем строку с товарами
     var offer = $.cookie("offer");
     //если она пуста
-    if (offer=="")
+    if (offer==null||offer=="")
     {
         //добавляем товар
         var items = id+"#"+num+"/";
@@ -139,13 +139,17 @@ function addItemToOffer(id,num)
     else
     {
         //массив объектов элементов заказа
-        var itemsList = {}; 
+        var itemsList = []; 
         //флаг наличия добавляемого товара в списке
         var exist = false;
         //формируем массив строк элементов заказа
         var items = offer.split("/");
         //перебираем все строки
         items.forEach(function(item, i, arr) {
+            if(item==="")
+            {
+                return;
+            }
             //разбиваем строку и получаем пару id и num
             var buff = item.split("#");
             //формируем объект
@@ -194,20 +198,24 @@ function addItemToOffer(id,num)
     }
 }
 
-//добавление товара в корзину
-function vemoveItemToOffer(id,num)
+//удаление товара из корзины
+function removeItemToOffer(id,num)
 {
     //получаем строку с товарами
     var offer = $.cookie("offer");
     //если она пуста - ничего не делаем
-    if (offer!="")
+    if (offer!=null||offer!="")
     {
         //массив объектов элементов заказа
-        var itemsList = {}; 
+        var itemsList = []; 
         //формируем массив строк элементов заказа
         var items = offer.split("/");
         //перебираем все строки
         items.forEach(function(item, i, arr) {
+            if(item==="")
+            {
+                return;
+            }
             //разбиваем строку и получаем пару id и num
             var buff = item.split("#");
             //формируем объект
@@ -256,14 +264,18 @@ function getOfferItems(){
     //получаем строку с товарами
     var offer = $.cookie("offer");
     //если она не пуста
-    if (offer!="")
+    if (offer!=null||offer!="")
     {
         //массив объектов элементов заказа
-        var itemsList = {}; 
+        var itemsList = []; 
         //формируем массив строк элементов заказа
         var items = offer.split("/");
         //перебираем все строки
         items.forEach(function(item, i, arr) {
+            if(item==="")
+            {
+                return;
+            }
             //разбиваем строку и получаем пару id и num
             var buff = item.split("#");
             //формируем объект
@@ -280,7 +292,70 @@ function getOfferItems(){
     else
     {
         //массив объектов элементов заказа
-        var itemsList = {};
+        var itemsList = [];
         return itemsList;
     }
 }
+
+//очистка корзины
+function ClearOfferItems(){
+    $.cookie("offer","");
+}
+
+function FadeToggleFlex(target,time,callback)
+{
+    if($(target).css("display")=='none')
+    {
+        $(target).css({'display':'flex'});
+        $(target).animate({opacity:1},time,function()
+        {
+            if (typeof callback === "function")
+            {
+                callback();
+            }
+        });
+    }
+    else
+    {
+        $(target).animate({opacity:0},time,function(){
+            $(target).css({'display':'none'},function(){
+               if (typeof callback === "function")
+                {
+                callback();
+                } 
+            });            
+        });
+    }
+}
+
+//показ модального окна выбора количества товара по клику по товару
+$(document).on('click','.merch',function(){
+   var id = $(this).attr("merchId");
+   var content = '<form merchId='+id+' class="setCount"> <input type="text" class="countMerch" placeholder="Количество товара" required pattern="^\\d+$" title="Количество товара - целое число"> <input type="submit" class="Accept" value="Принять"> <input type="button" class="Cancel" value="Отмена"> </form>';
+   $(".addMerchLayout .col").empty();
+   $(".addMerchLayout .col").append(content);
+   FadeToggleFlex($(".addMerchLayout"),500);
+});
+
+//закрытие модального окна по клику по подложке и кнопке закрытия
+$(document).on('click',".addMerchLayout, .Cancel",function(){
+    FadeToggleFlex($(".addMerchLayout"),500,function(){
+        $(".addMerchLayout .col").html("");
+    });
+});
+
+//останавливаем всплытие до подложки (иначе сработает закрытие модального окошка)
+$(document).on('click',".addMerchLayout .col",function(event){
+    event.stopPropagation();
+});
+
+$(document).on("submit",".setCount",function(event){
+    event.preventDefault();
+    var id = $(this).attr("merchId");
+    var count = $(".countMerch").val();
+    addItemToOffer(id,count);
+    var objects = getOfferItems();
+    objects.forEach(function(item, i, arr) {
+       alert(i+": "+item["id"]+" "+item["num"]); 
+    });
+});

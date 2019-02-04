@@ -195,3 +195,28 @@ body {
 .offerList [type="submit"]:hover{
     font-weight: bolder;
 }
+
+.addMerchLayout{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.5);
+    display: none;
+    opacity:0;
+}
+
+.addMerchLayout .col{
+    max-width: 400px;
+    background-color: rgba(110, 40, 14, .5);
+    padding: 10px !important;
+    border-radius: 3px;
+    font-family: LibertyBT;
+    font-size: 35px;
+}
+
+.addMerchLayout input{
+    width: 100%;
+    text-align: center;
+}
