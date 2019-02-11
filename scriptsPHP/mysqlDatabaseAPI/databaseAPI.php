@@ -37,6 +37,22 @@ class DatabaseAPI{
              throw $exception;            
         }       
     }
+    //метод для передачи запроса добавления к бд с отслеживанием закрытия соединения и возвратом идентификатора добавленной записи
+    private function Insert($queryString)
+    {
+        try
+        {
+            self::Connect();        
+            self::$conn->query($queryString);   
+            $id = self::$conn->insert_id;
+            self::Disconnect();
+            return $id;
+        }
+         catch(mysqli_sql_exception $exception)
+        {
+             throw $exception;            
+        }       
+    }
     //получение списка всех категорий
     public static function GetAllCat()
     {
@@ -206,4 +222,76 @@ WHERE `action_item`.`id_action`=$actionId";
             die("Ошибка. Код: ".$exception->code.". Описание ошибки: ".$exception->errorMessage().".");
         }
     }
+    
+    public static function GetPrice($id)
+    {
+        $query="SELECT `price` FROM `merchandise` WHERE `id`=$id";
+        try
+        {
+            $result = self::Query($query);
+            //ты возвращаешь mysqli_result или null, если запрос навернулся
+            return $result;
+        }
+        catch(mysqli_sql_exception $exception)
+        {
+            die("Ошибка. Код: ".$exception->code.". Описание ошибки: ".$exception->errorMessage().".");
+        }
+    }
+    
+    public static function GetMerchInfo($id)
+    {
+        $query="
+SELECT `merchandise`.`price`,`merchandise`.`title`, `merchandise_measure`.`text` AS 'measure'
+FROM `merchandise` 
+LEFT JOIN `merchandise_measure`
+ON `merchandise`.`id_measure`=`merchandise_measure`.`id`
+WHERE `merchandise`.`id`=$id";
+        try
+        {
+            $result = self::Query($query);
+            //ты возвращаешь mysqli_result или null, если запрос навернулся
+            return $result;
+        }
+        catch(mysqli_sql_exception $exception)
+        {
+            die("Ошибка. Код: ".$exception->code.". Описание ошибки: ".$exception->errorMessage().".");
+        }
+    }
+    
+    public static function GetMerchInfoForOfferList($id)
+    {
+        $query="
+SELECT `merchandise`.`id`,`merchandise`.`title`,`merchandise`.`description`,`merchandise`.`price`,`merchandise_measure`.`text`as'measure'
+FROM `merchandise`
+LEFT JOIN `merchandise_measure`
+ON `merchandise`.`id_measure`=`merchandise_measure`.`id`
+WHERE `merchandise`.`id`=$id";
+        try
+        {
+            $result = self::Query($query);
+            //ты возвращаешь mysqli_result или null, если запрос навернулся
+            return $result;
+        }
+        catch(mysqli_sql_exception $exception)
+        {
+            die("Ошибка. Код: ".$exception->code.". Описание ошибки: ".$exception->errorMessage().".");
+        }
+    }
+    
+    public static function insertNewOffer($name,$address,$phone)
+    {
+        $date = date('Y-m-d H:i:s');
+        $query="INSERT INTO `offer`(`id_state`, `date`,`client_name`,`address`, `phone`) VALUES (0,$date,$name,$address,$phone)";
+        try
+        {
+            $result = self::Insert($query);
+            //ты возвращаешь xbckj - id записи
+            return $result;
+        }
+        catch(mysqli_sql_exception $exception)
+        {
+            die("Ошибка. Код: ".$exception->code.". Описание ошибки: ".$exception->errorMessage().".");
+        }
+    }
+    
 }

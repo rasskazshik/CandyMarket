@@ -32,7 +32,7 @@ session_start();
                     <div class="col-3">
                     <img class="img-fluid" src="images/cart.png">
                     </div>
-                    <div class="col-9">Стоимость товаров в корзине: 100500 руб.</div>
+                    <div class="offerPrice col-9">Стоимость товаров в корзине: 0 руб.</div>
                 </div>
             </div>
             <!--навигация-->

@@ -77,7 +77,8 @@ function NavToProcessOrder(){
         navNotAnimate=false;
         $(".navigation a").removeClass("active");
         $(".navToProcessOrder").addClass("active");
-        $.post("content/processOrder.php",function(responce){
+        var goods = getOfferItems();
+        $.post("content/processOrder.php",{goods:goods},function(responce){
             $(".contentRow").fadeToggle(700,function(){
                 $(".contentRow").html(responce);
                 $(".contentRow").fadeToggle(700,function(){
@@ -121,15 +122,22 @@ function Navigate(){
     }
 }
 
-$(document).ready(Navigate());
+$(document).ready(function(){
+    updateTotalPrice();
+    Navigate();
+});
 
 //добавление товара в корзину
 function addItemToOffer(id,num)
 {
     //получаем строку с товарами
     var offer = $.cookie("offer");
+    if(offer==null)
+    {
+        offer="";
+    }
     //если она пуста
-    if (offer==null||offer=="")
+    if (offer=="")
     {
         //добавляем товар
         var items = id+"#"+num+"/";
@@ -203,8 +211,12 @@ function removeItemToOffer(id,num)
 {
     //получаем строку с товарами
     var offer = $.cookie("offer");
+    if(offer==null)
+    {
+        offer="";
+    }
     //если она пуста - ничего не делаем
-    if (offer!=null||offer!="")
+    if (offer!="")
     {
         //массив объектов элементов заказа
         var itemsList = []; 
@@ -263,8 +275,12 @@ function removeItemToOffer(id,num)
 function getOfferItems(){
     //получаем строку с товарами
     var offer = $.cookie("offer");
+    if(offer==null)
+    {
+        offer="";
+    }
     //если она не пуста
-    if (offer!=null||offer!="")
+    if (offer!="")
     {
         //массив объектов элементов заказа
         var itemsList = []; 
@@ -302,6 +318,8 @@ function ClearOfferItems(){
     $.cookie("offer","");
 }
 
+//анимированная функция показа и сокрытия модального окна 
+//с учетом отобржения флексов
 function FadeToggleFlex(target,time,callback)
 {
     if($(target).css("display")=='none')
@@ -318,12 +336,11 @@ function FadeToggleFlex(target,time,callback)
     else
     {
         $(target).animate({opacity:0},time,function(){
-            $(target).css({'display':'none'},function(){
-               if (typeof callback === "function")
-                {
+            $(target).css({'display':'none'});
+            if (typeof callback === "function")
+            {
                 callback();
-                } 
-            });            
+            }            
         });
     }
 }
@@ -349,13 +366,131 @@ $(document).on('click',".addMerchLayout .col",function(event){
     event.stopPropagation();
 });
 
+//указываем количество товара и добавляем к корзине
 $(document).on("submit",".setCount",function(event){
     event.preventDefault();
     var id = $(this).attr("merchId");
     var count = $(".countMerch").val();
     addItemToOffer(id,count);
-    var objects = getOfferItems();
-    objects.forEach(function(item, i, arr) {
-       alert(i+": "+item["id"]+" "+item["num"]); 
+    //обновляем общий ценник
+    updateTotalPrice();
+    //скрываем модальное окно
+    FadeToggleFlex($(".addMerchLayout"),500,function(){
+        $(".addMerchLayout .col").html("");
+    });
+});
+
+//получаем общую цену товара
+function updateTotalPrice(){
+    var goods = getOfferItems();
+    $.post("scriptsPHP/setTotalPrice.php",{goods:goods},function(content){
+        $(".offerPrice").html(content);
+    });
+};
+
+//уменьшение количества товара непосредственно в корзине
+$(document).on("click","[subId]",function(){
+   var id = $(this).attr("subId");
+   var content = '<form merchId='+id+' class="setRemoveCount"> <input type="text" class="countMerch" placeholder="Количество товара" required pattern="^\\d+$" title="Количество товара - целое число"> <input type="submit" class="Accept" value="Принять"> <input type="button" class="Cancel" value="Отмена"> </form>';
+   $(".addMerchLayout .col").empty();
+   $(".addMerchLayout .col").append(content);
+   FadeToggleFlex($(".addMerchLayout"),500);
+});
+
+//указываем количество товара для уменьшения и уменьшаем
+$(document).on("submit",".setRemoveCount",function(event){
+    event.preventDefault();
+    var id = $(this).attr("merchId");
+    var count = $(".countMerch").val();
+    removeItemToOffer(id,count);
+    //скрываем модальное окно
+    FadeToggleFlex($(".addMerchLayout"),500,function(){
+        var goods = getOfferItems();
+        navNotAnimate=false;
+        $.post("content/processOrder.php",{goods:goods},function(responce){
+            $(".contentRow").fadeToggle(700,function(){
+                $(".contentRow").html(responce);
+                //обновляем общий ценник
+                updateTotalPrice();
+                $(".contentRow").fadeToggle(700,function(){
+                    navNotAnimate=true;
+                });
+            }); 
+        });
+        $(".addMerchLayout .col").html("");
+    });
+});
+
+//увеличение количества товара непосредственно в корзине
+$(document).on("click","[addId]",function(){
+   var id = $(this).attr("addId");
+   var content = '<form merchId='+id+' class="setAddCount"> <input type="text" class="countMerch" placeholder="Количество товара" required pattern="^\\d+$" title="Количество товара - целое число"> <input type="submit" class="Accept" value="Принять"> <input type="button" class="Cancel" value="Отмена"> </form>';
+   $(".addMerchLayout .col").empty();
+   $(".addMerchLayout .col").append(content);
+   FadeToggleFlex($(".addMerchLayout"),500);
+});
+
+//указываем количество товара для увеличения и увеличиваем
+$(document).on("submit",".setAddCount",function(event){
+    event.preventDefault();
+    var id = $(this).attr("merchId");
+    var count = $(".countMerch").val();
+    addItemToOffer(id,count);
+    //скрываем модальное окно
+    FadeToggleFlex($(".addMerchLayout"),500,function(){
+        var goods = getOfferItems();
+        navNotAnimate=false;
+        $.post("content/processOrder.php",{goods:goods},function(responce){
+            $(".contentRow").fadeToggle(700,function(){
+                $(".contentRow").html(responce);
+                //обновляем общий ценник
+                updateTotalPrice();
+                $(".contentRow").fadeToggle(700,function(){
+                    navNotAnimate=true;
+                });
+            }); 
+        });
+        $(".addMerchLayout .col").html("");
+    });
+});
+
+//отправляем данные заказа в БД
+$(document).on("submit",".sendOfferData",function(event){
+    event.preventDefault();
+    var goods = getOfferItems();
+    var address = $(".address").val();
+    var phone = $(".phone").val();
+    var name = $(".name").val();
+    $.post("scriptsPHP/addOfferDataToDB.php",{goods:goods,address:address,phone:phone, name:name},function(responce){
+        if(responce=="true")
+        {
+            ClearOfferItems();
+            navNotAnimate=false;
+            $.post("content/processOrder.php",{report:"Заказ успешно зарегистрирован. В процессе его обработки с Вами свяжется наш менеджер."},function(responce){
+                $(".contentRow").fadeToggle(700,function(){
+                    $(".contentRow").html(responce);
+                    //обновляем общий ценник
+                    updateTotalPrice();
+                    $(".contentRow").fadeToggle(700,function(){
+                        navNotAnimate=true;
+                    });
+                }); 
+            });
+        }
+        else
+        {
+            var goods = getOfferItems();
+            navNotAnimate=false;
+            $.post("content/processOrder.php",{report:"Во время регистрации заказа произошла техническая ошибка. Попробуйте повторить попытку позднее."},function(responce){
+                $(".contentRow").fadeToggle(700,function(){
+                    $(".contentRow").html(responce);
+                    //обновляем общий ценник
+                    updateTotalPrice();
+                    $(".contentRow").fadeToggle(700,function(){
+                        navNotAnimate=true;
+                    });
+                }); 
+            });
+        }
     });
 });

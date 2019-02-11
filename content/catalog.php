@@ -7,7 +7,7 @@
     <input type="button" value="Показать по возрастанию цены">
 </div>
 
-<div merchId="11" class="merch col-md-6">
+<div merchId="2" class="merch col-md-6">
     <img src="images/merches/demoCandy.jpg" alt="Конфетище">
     <div class="info">
         <p class="cat">Конфеты</p>
@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div merchId="12" class="merch col-md-6">
+<div merchId="2" class="merch col-md-6">
         <img src="images/merches/demoCandy.jpg" alt="Конфетище">
         <div class="info">
             <p class="cat">Конфеты</p>
