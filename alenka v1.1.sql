@@ -2,10 +2,10 @@
 -- version 4.4.15.9
 -- https://www.phpmyadmin.net
 --
--- Хост: localhost
--- Время создания: Янв 17 2019 г., 12:56
--- Версия сервера: 5.6.37
--- Версия PHP: 7.1.8
+-- Host: localhost
+-- Generation Time: Feb 12, 2019 at 10:20 AM
+-- Server version: 5.6.37
+-- PHP Version: 7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `alenka`
+-- Database: `alenka`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `actions`
+-- Table structure for table `actions`
 --
 
 CREATE TABLE IF NOT EXISTS `actions` (
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `actions` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `action_item`
+-- Table structure for table `action_item`
 --
 
 CREATE TABLE IF NOT EXISTS `action_item` (
@@ -49,18 +49,26 @@ CREATE TABLE IF NOT EXISTS `action_item` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) NOT NULL,
   `title` varchar(1500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `title`) VALUES
+(4, 'Конфеты'),
+(5, 'Пряники');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `merchandise`
+-- Table structure for table `merchandise`
 --
 
 CREATE TABLE IF NOT EXISTS `merchandise` (
@@ -71,23 +79,37 @@ CREATE TABLE IF NOT EXISTS `merchandise` (
   `description` text NOT NULL,
   `price` float NOT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `merchandise`
+--
+
+INSERT INTO `merchandise` (`id`, `id_category`, `id_measure`, `title`, `description`, `price`, `image`) VALUES
+(2, 4, 1, 'Соль с перцем', 'Смесь соли с перцем отсыревшая на складе', 5000, 'врппв ваппвапп авпва');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `merchandise_measure`
+-- Table structure for table `merchandise_measure`
 --
 
 CREATE TABLE IF NOT EXISTS `merchandise_measure` (
   `id` int(11) NOT NULL,
   `text` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `merchandise_measure`
+--
+
+INSERT INTO `merchandise_measure` (`id`, `text`) VALUES
+(1, '100 г.');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `offer`
+-- Table structure for table `offer`
 --
 
 CREATE TABLE IF NOT EXISTS `offer` (
@@ -95,15 +117,22 @@ CREATE TABLE IF NOT EXISTS `offer` (
   `id_state` int(11) NOT NULL,
   `date` date NOT NULL,
   `client_name` varchar(500) NOT NULL,
-  `email` varchar(1000) NOT NULL,
   `address` text NOT NULL,
   `phone` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `offer`
+--
+
+INSERT INTO `offer` (`id`, `id_state`, `date`, `client_name`, `address`, `phone`) VALUES
+(4, 1, '2019-02-12', 'sfesfdsdf', 'sdfsdf', 'sdfsdfsdf'),
+(5, 1, '2019-02-12', '111111111', '111111111111111111', '11111111111111111');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `offer_item`
+-- Table structure for table `offer_item`
 --
 
 CREATE TABLE IF NOT EXISTS `offer_item` (
@@ -111,31 +140,48 @@ CREATE TABLE IF NOT EXISTS `offer_item` (
   `id_offer` int(11) NOT NULL,
   `id_merchandise` int(11) NOT NULL,
   `count_in_offer` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `offer_item`
+--
+
+INSERT INTO `offer_item` (`id`, `id_offer`, `id_merchandise`, `count_in_offer`) VALUES
+(5, 4, 2, 123),
+(6, 5, 2, 1);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `offer_state`
+-- Table structure for table `offer_state`
 --
 
 CREATE TABLE IF NOT EXISTS `offer_state` (
   `id` int(11) NOT NULL,
   `title` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Индексы сохранённых таблиц
+-- Dumping data for table `offer_state`
+--
+
+INSERT INTO `offer_state` (`id`, `title`) VALUES
+(1, 'Не обработано'),
+(2, 'Выполняется'),
+(3, 'Завершено');
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `actions`
+-- Indexes for table `actions`
 --
 ALTER TABLE `actions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `action_item`
+-- Indexes for table `action_item`
 --
 ALTER TABLE `action_item`
   ADD PRIMARY KEY (`id`),
@@ -143,13 +189,13 @@ ALTER TABLE `action_item`
   ADD KEY `id_merchandise` (`id_merchandise`);
 
 --
--- Индексы таблицы `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `merchandise`
+-- Indexes for table `merchandise`
 --
 ALTER TABLE `merchandise`
   ADD PRIMARY KEY (`id`),
@@ -157,20 +203,20 @@ ALTER TABLE `merchandise`
   ADD KEY `id_measure` (`id_measure`);
 
 --
--- Индексы таблицы `merchandise_measure`
+-- Indexes for table `merchandise_measure`
 --
 ALTER TABLE `merchandise_measure`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `offer`
+-- Indexes for table `offer`
 --
 ALTER TABLE `offer`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_state` (`id_state`);
 
 --
--- Индексы таблицы `offer_item`
+-- Indexes for table `offer_item`
 --
 ALTER TABLE `offer_item`
   ADD PRIMARY KEY (`id`),
@@ -178,81 +224,81 @@ ALTER TABLE `offer_item`
   ADD KEY `id_offer` (`id_offer`);
 
 --
--- Индексы таблицы `offer_state`
+-- Indexes for table `offer_state`
 --
 ALTER TABLE `offer_state`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `actions`
+-- AUTO_INCREMENT for table `actions`
 --
 ALTER TABLE `actions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT для таблицы `action_item`
+-- AUTO_INCREMENT for table `action_item`
 --
 ALTER TABLE `action_item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT для таблицы `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT для таблицы `merchandise`
+-- AUTO_INCREMENT for table `merchandise`
 --
 ALTER TABLE `merchandise`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT для таблицы `merchandise_measure`
+-- AUTO_INCREMENT for table `merchandise_measure`
 --
 ALTER TABLE `merchandise_measure`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT для таблицы `offer`
+-- AUTO_INCREMENT for table `offer`
 --
 ALTER TABLE `offer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT для таблицы `offer_item`
+-- AUTO_INCREMENT for table `offer_item`
 --
 ALTER TABLE `offer_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT для таблицы `offer_state`
+-- AUTO_INCREMENT for table `offer_state`
 --
 ALTER TABLE `offer_state`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- Ограничения внешнего ключа сохраненных таблиц
+-- Constraints for dumped tables
 --
 
 --
--- Ограничения внешнего ключа таблицы `action_item`
+-- Constraints for table `action_item`
 --
 ALTER TABLE `action_item`
   ADD CONSTRAINT `action_item_ibfk_1` FOREIGN KEY (`id_action`) REFERENCES `actions` (`id`),
   ADD CONSTRAINT `action_item_ibfk_2` FOREIGN KEY (`id_merchandise`) REFERENCES `merchandise` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `merchandise`
+-- Constraints for table `merchandise`
 --
 ALTER TABLE `merchandise`
   ADD CONSTRAINT `merchandise_ibfk_2` FOREIGN KEY (`id_measure`) REFERENCES `merchandise_measure` (`id`),
   ADD CONSTRAINT `merchandise_ibfk_3` FOREIGN KEY (`id_category`) REFERENCES `category` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `offer`
+-- Constraints for table `offer`
 --
 ALTER TABLE `offer`
   ADD CONSTRAINT `offer_ibfk_1` FOREIGN KEY (`id_state`) REFERENCES `offer_state` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `offer_item`
+-- Constraints for table `offer_item`
 --
 ALTER TABLE `offer_item`
   ADD CONSTRAINT `offer_item_ibfk_1` FOREIGN KEY (`id_offer`) REFERENCES `offer` (`id`),

@@ -494,3 +494,35 @@ $(document).on("submit",".sendOfferData",function(event){
         }
     });
 });
+
+//показ товаров с сортировкой по возрастанию
+$(document).on("click","#sortButtonDesc",function(){
+    navNotAnimate=false;
+    var cat=$(".catId").val();
+    var keywords=$(".keywords").val();
+    var sortType="DESC";
+    $.post("content/catalog.php",{cat:cat,keywords:keywords,sortType:sortType},function(responce){
+        $(".contentRow").fadeToggle(700,function(){
+            $(".contentRow").html(responce);
+            $(".contentRow").fadeToggle(700,function(){                    
+                navNotAnimate=true;
+            });
+        }); 
+   });
+});
+
+//показ товаров с сортировкой по убыванию
+$(document).on("click","#sortButtonAsc",function(){
+    navNotAnimate=false;
+    var cat=$(".catId").val();
+    var keywords=$(".keywords").val();
+    var sortType="";
+    $.post("content/catalog.php",{cat:cat,keywords:keywords,sortType:sortType},function(responce){
+        $(".contentRow").fadeToggle(700,function(){
+            $(".contentRow").html(responce);
+            $(".contentRow").fadeToggle(700,function(){                    
+                navNotAnimate=true;
+            });
+        }); 
+   });
+});

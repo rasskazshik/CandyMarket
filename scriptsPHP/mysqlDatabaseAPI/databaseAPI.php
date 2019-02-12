@@ -43,8 +43,12 @@ class DatabaseAPI{
         try
         {
             self::Connect();        
-            self::$conn->query($queryString);   
-            $id = self::$conn->insert_id;
+            $result = self::$conn->query($queryString);
+            $id=-1;
+            if($result)
+            {
+                $id = self::$conn->insert_id;
+            }
             self::Disconnect();
             return $id;
         }
@@ -101,14 +105,18 @@ class DatabaseAPI{
     //получение списка товаров по категории или же ключевому слову названия/описания с указанием направления сортировки по цене
     //сортировка в обратном порядке - параметр $orderDirection == DESC
     //если фильтр не нужен - передать пустую строку
-    public static function GetMerchByCat($catId,$searchText,$orderDirection)
+    public static function GetMerchByCat($catTitle,$searchText,$orderDirection)
     {
         $query="
-SELECT `merchandise`.`id`, `merchandise`.`title`,`merchandise`.`description`,`merchandise`.`price`,`merchandise_measure`.`text`as'measure',`merchandise`.`image`
-FROM `merchandise` LEFT JOIN `merchandise_measure` ON `merchandise`.`id_measure`=`merchandise_measure`.`id` ";
-        if($catId!="")
+SELECT `merchandise`.`id`, `merchandise`.`title`,`merchandise`.`description`,`merchandise`.`price`,`merchandise_measure`.`text`as'measure',`merchandise`.`image`,`category`.`title` as 'category'
+FROM `merchandise`
+LEFT JOIN `merchandise_measure` 
+ON `merchandise`.`id_measure`=`merchandise_measure`.`id`
+LEFT JOIN `category`
+ON `merchandise`.`id_category`=`category`.`id`";
+        if($catTitle!="")
         {
-          $query.="WHERE `merchandise`.`id_category`=$catId ";
+          $query.="WHERE `category`.`title`='$catTitle' ";
           if($searchText!="")
           {
               $query.="AND (`merchandise`.`title` LIKE '%$searchText%' OR `merchandise`.`description` LIKE '%$searchText%') ";
@@ -279,14 +287,14 @@ WHERE `merchandise`.`id`=$id";
     }
     
     public static function insertNewOffer($name,$address,$phone)
-    {
-        $date = date('Y-m-d H:i:s');
-        $query="INSERT INTO `offer`(`id_state`, `date`,`client_name`,`address`, `phone`) VALUES (0,$date,$name,$address,$phone)";
+    {        
+        $date = gmdate('Y-m-d H:i:s',time() + 3600*3);
+        $query="INSERT INTO `offer`(`id_state`, `date`,`client_name`,`address`, `phone`) VALUES (1,'$date','$name','$address','$phone')";
         try
         {
-            $result = self::Insert($query);
-            //ты возвращаешь xbckj - id записи
-            return $result;
+            $PK = self::Insert($query);
+            //ты возвращаешь id записи
+            return $PK;
         }
         catch(mysqli_sql_exception $exception)
         {
@@ -294,4 +302,20 @@ WHERE `merchandise`.`id`=$id";
         }
     }
     
+    //добавление товара в заказ 
+    public static function addOfferItem($idOffer,$idMerch,$count)
+    {        
+        $date = gmdate('Y-m-d H:i:s',time() + 3600*3);
+        $query="INSERT INTO `offer_item`(`id_offer`, `id_merchandise`, `count_in_offer`) VALUES ($idOffer,$idMerch,$count)";
+        try
+        {
+            $PK = self::Insert($query);
+            //ты возвращаешь id записи
+            return $PK;
+        }
+        catch(mysqli_sql_exception $exception)
+        {
+            die("Ошибка. Код: ".$exception->code.". Описание ошибки: ".$exception->errorMessage().".");
+        }
+    }
 }

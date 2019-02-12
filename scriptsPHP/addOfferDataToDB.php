@@ -4,13 +4,16 @@ $goods = $_POST["goods"];
 $name= $_POST["name"];
 $address = $_POST["address"];
 $phone = $_POST["phone"];
-DatabaseAPI::AddOffer();
-$offerId;
+$offerId = DatabaseAPI::insertNewOffer($name, $address, $phone);
+if($offerId==-1)
+{
+    exit("false");
+}
 foreach ($goods as $value) 
 {
     $price = mysqli_fetch_assoc(DatabaseAPI::GetMerchInfoForOfferList($value['id']));
     $merchId=$value['id'];
-    $merchNum=$value['num'];
-    DatabaseAPI::AddOfferItem($offerId,$merchId,$merchNum);
+    $merchCount=$value['num'];    
+    DatabaseAPI::addOfferItem($offerId, $merchId, $merchCount);
 }
 exit("true");
