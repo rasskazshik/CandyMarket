@@ -26,7 +26,7 @@ session_start();
         <div class="header">
             <div class="row">
                 <div class="logo col-lg-8">
-                    <div>Магазинушко Аленка</div>
+                    <div>Магазин Аленка</div>
                 </div>
                 <div class="shopingCart col-lg-4 row align-items-center">
                     <div class="col-3">

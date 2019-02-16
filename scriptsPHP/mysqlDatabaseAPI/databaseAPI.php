@@ -151,22 +151,33 @@ ON `merchandise`.`id_category`=`category`.`id`";
     //получение списка заказов согласно статусу и сортировкой по дате заказа
     //сортировка в обратном порядке - параметр $orderDirection == DESC
     //если фильтр не нужен - передать пустую строку
-    public static function GetOffersByState($stateId,$orderDirection)
+    public static function GetOffersByStateAndKeywords($stateId,$phone,$sort)
     {
         $query="
-SELECT `offer`.`id`,`offer`.`date`,`offer`.`client_name`,`offer`.`email`,`offer`.`phone`,`offer`.`address`,`offer_state`.`title`as'state'
-FROM `offer` LEFT JOIN `offer_state` ON `offer`.`id_state`=`offer_state`.`id` ";
-        if($stateId!="")
+SELECT `offer`.`id` as 'offerId', `offer`.`date`, `offer`.`client_name`, `offer`.`address`, `offer`.`phone`, `offer_state`.`title` as 'offerState'
+FROM `offer`
+LEFT JOIN `offer_state`
+ON `offer`.`id_state`=`offer_state`.`id`
+";
+        if ($stateId!="")
         {
-          $query.="WHERE `offer`.`id_state`=$stateId ";
-        }
-        if($orderDirection=="DESC")
-        {
-            $query.="ORDER BY `offer`.`date` DESC";
+            $query.="WHERE `offer`.`id_state`=$stateId ";
+            if($phone!="")
+            {
+                $query.="AND `offer`.`phone` LIKE '$phone' ";
+            }
         }
         else
         {
-            $query.="ORDER BY `offer`.`date`";
+            if($phone!="")
+            {
+                $query.="WHERE `offer`.`phone` LIKE '$phone' ";
+            }
+        }
+        $query.="ORDER BY `offer`.`date` ";
+        if($sort!="")
+        {
+            $query.="$sort";
         }
         try
         {
@@ -179,13 +190,11 @@ FROM `offer` LEFT JOIN `offer_state` ON `offer`.`id_state`=`offer_state`.`id` ";
             die("Ошибка. Код: ".$exception->code.". Описание ошибки: ".$exception->errorMessage().".");
         }
     }
-    //получение списка товаров в заказе с калькуляцией стоимости наименования по id заказа
-    public static function GetOfferItemsByOfferId($offerId)
+    
+    //получение списка товаров в заказе
+    public static function GetOfferItems($offerId)
     {
-        $query="
-SELECT `offer_item`.`id`AS'offer_item_id',`merchandise`.`price`,`offer_item`.`count_in_offer`,(`offer_item`.`count_in_offer`*`merchandise`.`price`)AS'total_price',`merchandise`.`id`AS'merch_id',`merchandise`.`title`
-FROM `offer_item` LEFT JOIN `merchandise` ON `offer_item`.`id_merchandise`=`merchandise`.`id`
-WHERE `offer_item`.`id_offer`=$offerId";
+        $query="SELECT `id`, `id_merchandise`, `count_in_offer` FROM `offer_item` WHERE `id_offer`=$offerId";
         try
         {
             $result = self::Query($query);
@@ -197,6 +206,7 @@ WHERE `offer_item`.`id_offer`=$offerId";
             die("Ошибка. Код: ".$exception->code.". Описание ошибки: ".$exception->errorMessage().".");
         }
     }
+    
     //получение списка акций
     public static function GetActions()
     {
@@ -274,6 +284,28 @@ FROM `merchandise`
 LEFT JOIN `merchandise_measure`
 ON `merchandise`.`id_measure`=`merchandise_measure`.`id`
 WHERE `merchandise`.`id`=$id";
+        try
+        {
+            $result = self::Query($query);
+            //ты возвращаешь mysqli_result или null, если запрос навернулся
+            return $result;
+        }
+        catch(mysqli_sql_exception $exception)
+        {
+            die("Ошибка. Код: ".$exception->code.". Описание ошибки: ".$exception->errorMessage().".");
+        }
+    }
+    
+    public static function GetMerchInfoForOfferListByOfferId($idMerch,$idOffer)
+    {
+        $query="
+SELECT `merchandise`.`id`,`merchandise`.`title`,`merchandise`.`description`,`merchandise`.`price`,`merchandise_measure`.`text`as'measure'
+FROM `merchandise`
+LEFT JOIN `merchandise_measure`
+ON `merchandise`.`id_measure`=`merchandise_measure`.`id`
+RIGHT JOIN `offer_item`
+ON `merchandise`.`id`=`offer_item`.`id_merchandise`
+WHERE `merchandise`.`id`=$idMerch AND `offer_item`.`id_offer`=$idOffer";
         try
         {
             $result = self::Query($query);

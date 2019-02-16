@@ -3,6 +3,6 @@
 </div>
 <div class="contacts col-md-6 align-self-center">
     <p>Адрес: <span>Курск Проспект Победы 74А</span></p>
-    <p>Телефон: <span>8-999-608-81-86</span></p>
-    <p>Электронная почта: <span>konditerskaya.alenka@mail.ru</span></p>        
+    <p>Телефон: <a href="tel:+79996088186"><span>8-999-608-81-86</span></a></p>
+    <p>Электронная почта: <a href="mailto:konditerskaya.alenka@mail.ru"><span>konditerskaya.alenka@mail.ru</span></a></p>        
 </div>

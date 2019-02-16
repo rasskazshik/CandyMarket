@@ -6,7 +6,7 @@ body {
     background-image: url("../images/bg.jpg"); 
 }
 
-.header{
+.header,.headerAdm{
     background-color: #6e280e;
     border-radius: 3px;
     margin: 5px 0;
@@ -16,6 +16,11 @@ body {
 .header>div:first-child{
     border-bottom: 5px solid #cb5c53;
     margin-left: 0;
+}
+.headerAdm>div:first-child{
+    border-bottom: 5px solid #cb5c53;
+    margin-left: 0;
+    margin-right: 0;
 }
 /*костыль для рамки-изображения в колонках*/
 .logo{
@@ -60,6 +65,8 @@ body {
 .navigation a{
     text-align: center;
     cursor: pointer;
+    color: white;
+    text-decoration: none;
 }
 .navigation a:hover{
     background-color: #cd844d
@@ -82,14 +89,16 @@ body {
 .contacts{
     padding: 10px !important;
     font-weight: bolder;
-    font-size: 25px;
+    font-size: 40px;
+    font-family: LibertyBT;
 }
 
 .contacts span{
     font-style: italic;
+    text-decoration: underline;
 }
 
-.merch{
+.merch,.merchAdm{
     outline: solid 4px #5c471e;
     outline-offset: -8px;
     padding: 8px !important;
@@ -100,16 +109,20 @@ body {
     font-style: italic;
     cursor: pointer;
 }
-.merch:hover{
+.merch:hover,.merchAdm:hover{
     background-color: rgba(110, 40, 14, .9);
 }
 
-.merch img{
+.merch img, .merchAdm img{
     width: 100%;    
 }
 
-.merch p{
+.merch p, .merchAdm p{
     margin: 10px;  
+}
+
+.merchAdm input, .merchAdm textarea{
+    width: 100%;
 }
 
 .search{
@@ -134,12 +147,39 @@ body {
     margin: 3px 0 3px 0;
     border-radius: 3px;
 }
+.admAction{
+    font-family:serif;
+    font-size: 25px;
+    color: white;
+    font-weight: bolder;
+    background-color: rgba(110, 40, 14, .8);
+    padding:0;
+    margin: 3px 0 3px 0;
+    border-radius: 3px;
+}
 
-.actions img{
+.actions img, .admAction img{
     width: 100%;
     margin: auto;
 }
 
+.actionTitle{
+    text-decoration: underline;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.admAction input,.admAction textarea{
+    width: 98%;
+}
+
+.admActionImgCol{
+    padding-left: 20px;
+}
+
+.maxWidth{
+    width: 100% !important;
+}
 .offerList{
     max-width: 750px;
     background-color: rgba(110, 40, 14, .5);
