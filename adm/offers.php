@@ -1,5 +1,9 @@
 <?php 
-session_start();
+    session_start();
+    if($_SESSION["isAuth"]!=true)
+    {
+        header("Location: index.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang = "ru">
@@ -18,6 +22,7 @@ session_start();
     <script defer src="../scriptsJS/popper.min.js"></script>
     <!--Bootstrap4-->
     <script defer src="../scriptsJS/bootstrap.min.js"></script>
+    <script defer src="../scriptsJS/jquery.redirect.js" type="text/javascript"></script>
     <!--собственные скрипты-->
     <script defer src="../scriptsJS/main.js"></script>
 </head>
@@ -31,9 +36,9 @@ session_start();
             </div>
             <!--навигация-->
             <div class="row navigation no-gutters">
-                <a href="index.php" class="col-md container"><div>Товары</div></a>
+                <a href="catalog.php" class="col-md container"><div>Товары</div></a>
                 <a href="offers.php" class="col-md container"><div>Заказы</div></a>
-                <a href="actions.php" class="col-md container"><div>Акции</div></a>
+                <a href="actions.php" class="col-md container"><div>Новости</div></a>
             </div>  
         </div>
         <!--контейнер для выгрузки контента-->

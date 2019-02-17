@@ -38,7 +38,7 @@ session_start();
             <!--навигация-->
             <div class="row navigation no-gutters">
                 <a class="col-md container navToCatalog active"><div>Каталог</div></a>
-                <a class="col-md container navToActions"><div>Акции</div></a>
+                <a class="col-md container navToActions"><div>Новости</div></a>
                 <a class="col-md container navToContacts"><div>Контактные данные</div></a>
             </div>  
         </div>

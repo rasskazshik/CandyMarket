@@ -57,7 +57,7 @@ END;
             
 print<<<END
 <div merchId="$id" class="merch col-md-6">
-    <img src="$image" alt='Не удалось загрузить изображение товара "$title"'>
+    <img src="images/merches/$image" alt='Не удалось загрузить изображение товара "$title"'>
     <div class="info">
         <p class="cat">$cat</p>
         <p class="title">$title</p>

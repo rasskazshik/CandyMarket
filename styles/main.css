@@ -98,7 +98,7 @@ body {
     text-decoration: underline;
 }
 
-.merch,.merchAdm{
+.merch{
     outline: solid 4px #5c471e;
     outline-offset: -8px;
     padding: 8px !important;
@@ -109,6 +109,20 @@ body {
     font-style: italic;
     cursor: pointer;
 }
+
+.merchAdm{
+    outline: solid 4px #5c471e;
+    outline-offset: -8px;
+    padding: 8px !important;
+    background-color: rgba(110, 40, 14, .8);
+    background-clip:content-box;
+    font-weight: bolder;
+    font-size: 25px;
+    font-style: italic;
+    cursor: pointer;
+    font-family: serif;
+}
+
 .merch:hover,.merchAdm:hover{
     background-color: rgba(110, 40, 14, .9);
 }
@@ -124,6 +138,16 @@ body {
 .merchAdm input, .merchAdm textarea{
     width: 100%;
 }
+.merchAdm [type="submit"],.merchAdm [type="button"], .admAction [type="submit"], .admAction [type="button"]{
+    font-size: 35px;
+    font-family: LibertyBT; 
+}
+
+
+.admAction [type="text"]{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 .search{
     padding: 5px !important;
@@ -133,7 +157,7 @@ body {
     width: 250px;
 }
 
-.catId, .keywords{
+.catId, .keywords, .stateId, .phone, .searchOfferId{
     width: calc(100% - 255px);
 }
 
@@ -156,6 +180,7 @@ body {
     padding:0;
     margin: 3px 0 3px 0;
     border-radius: 3px;
+    font-style: italic;
 }
 
 .actions img, .admAction img{
@@ -187,6 +212,7 @@ body {
     border-radius: 3px;
     font-family: LibertyBT;
     font-size: 35px;
+    margin-bottom: 10px;
 }
 
 .offerList li{
@@ -202,6 +228,17 @@ body {
 
 .offerList span:hover{
     font-weight: bolder;
+}
+
+.offerList [type="number"]{
+    font-family: initial;
+    font-size: 20px;
+    width: 90px;
+}
+
+.offerList [type="button"],.offerList [type="submit"]{
+    width: 100%;
+    cursor: pointer;
 }
 
 .offerList [type="text"]{
@@ -221,7 +258,7 @@ body {
     color:#E2FFBD;
 }
 
-.offerList [type="submit"]{
+.offerListSubmit{
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -230,9 +267,10 @@ body {
     border: none;
     border-bottom: solid white 1px;
     cursor: pointer;
+    width: auto !important;
 }
 
-.offerList [type="submit"]:hover{
+.offerListSubmit:hover{
     font-weight: bolder;
 }
 
@@ -257,6 +295,23 @@ body {
 }
 
 .addMerchLayout input{
+    width: 100%;
+    text-align: center;
+}
+
+.update{    
+    margin-left: 0px;
+}
+
+.update input{
+    width: 100% !important;
+}
+
+.passwordForm{
+    width: 300px;
+}
+
+.passwordContainer input{
     width: 100%;
     text-align: center;
 }

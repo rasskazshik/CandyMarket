@@ -15,7 +15,7 @@ print<<<END
     <div class="col-12">
         <div class="actions row">
             <div class="col-lg-5 align-self-center">
-                <img src="$image" alt="Нет акций">
+                <img src="images/actions/$image" alt="Не удалось загрузить изображение $title">
             </div>
             <div class="col-lg-7 align-self-center">
                 <p class="actionTitle">$title</p>
@@ -32,10 +32,10 @@ print<<<END
     <div class="col-12">
         <div class="actions row">
             <div class="col-lg-5 align-self-center">
-                <img src="images/actions/ThereIsNoActions.png" alt="Нет акций">
+                <img src="images/actions/ThereIsNoActions.png" alt="Нет новостей">
             </div>
             <div class="col-lg-7 align-self-center">
-                <p class="actionTitle">Увы, на текущий момент акций нет.</p>
+                <p class="actionTitle">Увы, на текущий момент новостей нет.</p>
             </div>
         </div>
     </div>

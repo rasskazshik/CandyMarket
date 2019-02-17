@@ -1,13 +1,13 @@
 <div class="col-12">
-        <form class="admAction">
+        <form class="admAction admActionAdd">
             <div class="row">
                 <div class="col-lg-5 align-self-center admActionImgCol">                    
-                    <p>Изображение для акции</p>
+                    <p>Изображение для новости</p>
                     <input type="file" name="actionImage" required>
                 </div>
                 <div class="col-lg-7 align-self-center">
-                    <input type="text" name="actionAdmTitle" placeholder="Название акции" required placeholder="Наименование акции">
-                    <textarea name="actionAdmText" required placeholder="Текст акции" required placeholder="Текст акции"></textarea>
+                    <input type="text" name="actionAdmTitle" placeholder="Название новости" required placeholder="Наименование новости">
+                    <textarea name="actionAdmText" required placeholder="Текст новости" required placeholder="Текст новости"></textarea>
                 </div>
             </div>
         <input class="maxWidth" type="submit" value="Добавить">
@@ -27,20 +27,22 @@
             
 print<<<END
     <div class="col-12">
-        <form class="admAction">
+        <form class="admAction admActionUpdate">
             <div class="row">
                 <div class="col-lg-5 align-self-center admActionImgCol">
-                    <img src="../$image" alt="Нет акций">
+                    <input type="text" value="$image" name="actionOldImage" hidden>
+                    <input type="text" value="$id" name="actionId" hidden>
+                    <img src="../images/actions/$image" alt="Нет новостей">
                     <p>Изображение для замены текущего</p>
                     <input type="file" name="actionImage">
                 </div>
                 <div class="col-lg-7 align-self-center">
-                    <input type="text" name="actionAdmTitle" placeholder="Название акции" value=$title" required>
-                    <textarea name="actionAdmText" required placeholder="Текст акции" required>$text</textarea>
+                    <input type="text" name="actionAdmTitle" placeholder="Название новости" value="$title" required>
+                    <textarea name="actionAdmText" required placeholder="Текст новости" required>$text</textarea>
                 </div>
             </div>
         <input class="maxWidth" type="submit" value="Изменить">
-        <input class="maxWidth" type="button" value="Удалить">
+        <input class="maxWidth deleteAction" actionId="$id" image="$image" type="button" value="Удалить">
         </form>
     </div>
 END;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 12, 2019 at 10:20 AM
+-- Generation Time: Feb 17, 2019 at 07:47 PM
 -- Server version: 5.6.37
 -- PHP Version: 7.1.8
 
@@ -31,20 +31,7 @@ CREATE TABLE IF NOT EXISTS `actions` (
   `title` varchar(1500) NOT NULL,
   `text` text NOT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `action_item`
---
-
-CREATE TABLE IF NOT EXISTS `action_item` (
-  `id` int(11) NOT NULL,
-  `id_action` int(11) NOT NULL,
-  `id_merchandise` int(11) NOT NULL,
-  `discount_precent` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -54,16 +41,9 @@ CREATE TABLE IF NOT EXISTS `action_item` (
 
 CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) NOT NULL,
-  `title` varchar(1500) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`id`, `title`) VALUES
-(4, 'Конфеты'),
-(5, 'Пряники');
+  `title` varchar(1500) NOT NULL,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -78,15 +58,9 @@ CREATE TABLE IF NOT EXISTS `merchandise` (
   `title` varchar(1500) NOT NULL,
   `description` text NOT NULL,
   `price` float NOT NULL,
-  `image` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `merchandise`
---
-
-INSERT INTO `merchandise` (`id`, `id_category`, `id_measure`, `title`, `description`, `price`, `image`) VALUES
-(2, 4, 1, 'Соль с перцем', 'Смесь соли с перцем отсыревшая на складе', 5000, 'врппв ваппвапп авпва');
+  `image` text NOT NULL,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -96,15 +70,9 @@ INSERT INTO `merchandise` (`id`, `id_category`, `id_measure`, `title`, `descript
 
 CREATE TABLE IF NOT EXISTS `merchandise_measure` (
   `id` int(11) NOT NULL,
-  `text` varchar(500) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `merchandise_measure`
---
-
-INSERT INTO `merchandise_measure` (`id`, `text`) VALUES
-(1, '100 г.');
+  `text` varchar(500) NOT NULL,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -119,15 +87,7 @@ CREATE TABLE IF NOT EXISTS `offer` (
   `client_name` varchar(500) NOT NULL,
   `address` text NOT NULL,
   `phone` varchar(500) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `offer`
---
-
-INSERT INTO `offer` (`id`, `id_state`, `date`, `client_name`, `address`, `phone`) VALUES
-(4, 1, '2019-02-12', 'sfesfdsdf', 'sdfsdf', 'sdfsdfsdf'),
-(5, 1, '2019-02-12', '111111111', '111111111111111111', '11111111111111111');
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -140,15 +100,7 @@ CREATE TABLE IF NOT EXISTS `offer_item` (
   `id_offer` int(11) NOT NULL,
   `id_merchandise` int(11) NOT NULL,
   `count_in_offer` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `offer_item`
---
-
-INSERT INTO `offer_item` (`id`, `id_offer`, `id_merchandise`, `count_in_offer`) VALUES
-(5, 4, 2, 123),
-(6, 5, 2, 1);
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -159,7 +111,7 @@ INSERT INTO `offer_item` (`id`, `id_offer`, `id_merchandise`, `count_in_offer`) 
 CREATE TABLE IF NOT EXISTS `offer_state` (
   `id` int(11) NOT NULL,
   `title` varchar(500) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `offer_state`
@@ -168,7 +120,8 @@ CREATE TABLE IF NOT EXISTS `offer_state` (
 INSERT INTO `offer_state` (`id`, `title`) VALUES
 (1, 'Не обработано'),
 (2, 'Выполняется'),
-(3, 'Завершено');
+(3, 'Завершено'),
+(4, 'Заказ был отменен');
 
 --
 -- Indexes for dumped tables
@@ -179,14 +132,6 @@ INSERT INTO `offer_state` (`id`, `title`) VALUES
 --
 ALTER TABLE `actions`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `action_item`
---
-ALTER TABLE `action_item`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_action` (`id_action`),
-  ADD KEY `id_merchandise` (`id_merchandise`);
 
 --
 -- Indexes for table `category`
@@ -237,52 +182,40 @@ ALTER TABLE `offer_state`
 -- AUTO_INCREMENT for table `actions`
 --
 ALTER TABLE `actions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `action_item`
---
-ALTER TABLE `action_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `merchandise`
 --
 ALTER TABLE `merchandise`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `merchandise_measure`
 --
 ALTER TABLE `merchandise_measure`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `offer`
 --
 ALTER TABLE `offer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `offer_item`
 --
 ALTER TABLE `offer_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `offer_state`
 --
 ALTER TABLE `offer_state`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `action_item`
---
-ALTER TABLE `action_item`
-  ADD CONSTRAINT `action_item_ibfk_1` FOREIGN KEY (`id_action`) REFERENCES `actions` (`id`),
-  ADD CONSTRAINT `action_item_ibfk_2` FOREIGN KEY (`id_merchandise`) REFERENCES `merchandise` (`id`);
 
 --
 -- Constraints for table `merchandise`

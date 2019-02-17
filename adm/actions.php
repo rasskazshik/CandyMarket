@@ -1,5 +1,9 @@
 <?php 
-session_start();
+    session_start();
+    if($_SESSION["isAuth"]!=true)
+    {
+        header("Location: index.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang = "ru">
@@ -26,14 +30,14 @@ session_start();
         <div class="headerAdm">
             <div class="row">
                 <div class="logo col-12">
-                    <div>Магазин Аленка - акции</div>
+                    <div>Магазин Аленка - новости</div>
                 </div>             
             </div>
             <!--навигация-->
             <div class="row navigation no-gutters">
-                <a href="index.php" class="col-md container"><div>Товары</div></a>
+                <a href="catalog.php" class="col-md container"><div>Товары</div></a>
                 <a href="offers.php" class="col-md container"><div>Заказы</div></a>
-                <a href="actions.php" class="col-md container"><div>Акции</div></a>
+                <a href="actions.php" class="col-md container"><div>Новости</div></a>
             </div>  
         </div>
         <!--контейнер для выгрузки контента-->

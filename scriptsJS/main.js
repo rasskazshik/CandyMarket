@@ -25,7 +25,7 @@ $(".navToCatalog").on("click",function(event){
     }
 });
 
-//выгрузка контента с акциями
+//выгрузка контента с новостями
 function NavToActions(){ 
     navNotAnimate=false;
     $(".navigation a").removeClass("active");
@@ -557,4 +557,400 @@ $(document).on("click","#sortButtonAscAdm",function(){
             });
         }); 
    });
+});
+
+$(document).on("click",".printOffer",function(){
+   var offerId= $(this).attr("offerId"); 
+   $.redirect("printOffer.php", {offerId: offerId}, "POST", "_blank");
+});
+
+$(document).on("click","#findOffersAdm",function(){
+    navNotAnimate=false;
+    var state= $(".stateId").val(); 
+    var phone= $(".phone").val(); 
+    var searchOfferId= $(".searchOfferId").val();
+    $.post("../content/adminOffers.php",{state: state,phone:phone,searchOfferId:searchOfferId},function(responce){
+        $(".contentRow").fadeToggle(700,function(){
+            $(".contentRow").html(responce);
+            $(".contentRow").fadeToggle(700,function(){                    
+                navNotAnimate=true;
+            });
+        }); 
+   });
+});
+
+$(document).on("submit",".merchAdmAddForm",function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        url: "../scriptsPHP/addNewMerch.php",
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            if(data=="true")
+            {
+                navNotAnimate=false;
+                var cat=$(".catId").val();
+                var keywords=$(".keywords").val();
+                var sortType="";
+                $.post("../content/adminCatalog.php",{cat:cat,keywords:keywords,sortType:sortType},function(responce){
+                    $(".contentRow").fadeToggle(700,function(){
+                        $(".contentRow").html(responce);
+                        $(".contentRow").fadeToggle(700,function(){                    
+                            navNotAnimate=true;
+                        });
+                    }); 
+               });
+            }
+            else
+            {
+                alert(data);
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+
+$(document).on("submit",".merchAdmForm",function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        url: "../scriptsPHP/updateMerch.php",
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            if(data=="true")
+            {
+                navNotAnimate=false;
+                var cat=$(".catId").val();
+                var keywords=$(".keywords").val();
+                var sortType="";
+                $.post("../content/adminCatalog.php",{cat:cat,keywords:keywords,sortType:sortType},function(responce){
+                    $(".contentRow").fadeToggle(700,function(){
+                        $(".contentRow").html(responce);
+                        $(".contentRow").fadeToggle(700,function(){                    
+                            navNotAnimate=true;
+                        });
+                    }); 
+               });
+            }
+            else
+            {
+                alert(data);
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+
+$(document).on("click",".deleteMerch",function(){
+    var id = $(this).attr("merchId");
+    var imageName = $(this).attr("imageName");
+    $.post("../scriptsPHP/deleteMerch.php",{id:id,imageName:imageName},function (data) {
+        if(data=="true")
+        {
+            navNotAnimate=false;
+            var cat=$(".catId").val();
+            var keywords=$(".keywords").val();
+            var sortType="";
+            $.post("../content/adminCatalog.php",{cat:cat,keywords:keywords,sortType:sortType},function(responce){
+                $(".contentRow").fadeToggle(700,function(){
+                    $(".contentRow").html(responce);
+                    $(".contentRow").fadeToggle(700,function(){                    
+                        navNotAnimate=true;
+                    });
+                }); 
+           });
+        }
+        else
+        {
+            alert(data);
+        }
+    });
+});
+
+$(document).on("click","#updateMeasure",function(){
+    var newMeasureText = $("#updateMeasureTextbox").val();
+    var oldMeasureText = $("#updateMeasureDatalist").val();
+    if(newMeasureText=="")
+    {
+        alert("Вы не заполнили поле с текстом единицы измерения.");
+        return;
+    }
+    $.post("../scriptsPHP/updateOrAddMeasure.php",{newMeasureText:newMeasureText,oldMeasureText:oldMeasureText},function (data) {
+        if(data=="true")
+        {
+            navNotAnimate=false;
+            var cat=$(".catId").val();
+            var keywords=$(".keywords").val();
+            var sortType="";
+            $.post("../content/adminCatalog.php",{cat:cat,keywords:keywords,sortType:sortType},function(responce){
+                $(".contentRow").fadeToggle(700,function(){
+                    $(".contentRow").html(responce);
+                    $(".contentRow").fadeToggle(700,function(){                    
+                        navNotAnimate=true;
+                    });
+                }); 
+           });
+        }
+        else
+        {
+             alert(data);
+        }
+    });
+});
+
+$(document).on("click","#updateCat",function(){
+    var newCatText = $("#updateCatTextbox").val();
+    var oldCatText = $("#updateCatDatalist").val();
+    if(newCatText=="")
+    {
+        alert("Вы не заполнили поле с текстом категории товара.");
+        return;
+    }
+    $.post("../scriptsPHP/updateOrAddCat.php",{newCatText:newCatText,oldCatText:oldCatText},function (data) {
+        if(data=="true")
+        {
+            navNotAnimate=false;
+            var cat=$(".catId").val();
+            var keywords=$(".keywords").val();
+            var sortType="";
+            $.post("../content/adminCatalog.php",{cat:cat,keywords:keywords,sortType:sortType},function(responce){
+                $(".contentRow").fadeToggle(700,function(){
+                    $(".contentRow").html(responce);
+                    $(".contentRow").fadeToggle(700,function(){                    
+                        navNotAnimate=true;
+                    });
+                }); 
+           });
+        }
+        else
+        {
+             alert(data);
+        }
+    });
+});
+
+$(document).on("click","#deleteCat",function(){
+    var oldCatText = $("#updateCatDatalist").val();
+    if(oldCatText=="")
+    {
+        alert("Вы не выбрали категорию товара для удаления.");
+        return;
+    }
+    $.post("../scriptsPHP/deleteCat.php",{oldCatText:oldCatText},function (data) {
+        if(data=="true")
+        {
+            navNotAnimate=false;
+            var cat=$(".catId").val();
+            var keywords=$(".keywords").val();
+            var sortType="";
+            $.post("../content/adminCatalog.php",{cat:cat,keywords:keywords,sortType:sortType},function(responce){
+                $(".contentRow").fadeToggle(700,function(){
+                    $(".contentRow").html(responce);
+                    $(".contentRow").fadeToggle(700,function(){                    
+                        navNotAnimate=true;
+                    });
+                }); 
+           });
+        }
+        else
+        {
+             alert(data);
+        }
+    });
+});
+
+$(document).on("click","#deleteMeasure",function(){
+    var oldMeasureText = $("#updateMeasureDatalist").val();
+    if(oldMeasureText=="")
+    {
+        alert("Вы не выбрали ед. измерения для удаления.");
+        return;
+    }
+    $.post("../scriptsPHP/deleteMeasure.php",{oldMeasureText:oldMeasureText},function (data) {
+        if(data=="true")
+        {
+            navNotAnimate=false;
+            var cat=$(".catId").val();
+            var keywords=$(".keywords").val();
+            var sortType="";
+            $.post("../content/adminCatalog.php",{cat:cat,keywords:keywords,sortType:sortType},function(responce){
+                $(".contentRow").fadeToggle(700,function(){
+                    $(".contentRow").html(responce);
+                    $(".contentRow").fadeToggle(700,function(){                    
+                        navNotAnimate=true;
+                    });
+                }); 
+           });
+        }
+        else
+        {
+             alert(data);
+        }
+    });
+});
+
+$(document).on("submit",".admActionAdd",function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        url: "../scriptsPHP/addNewAction.php",
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            if(data=="true")
+            {
+                navNotAnimate=false;
+                $.post("../content/adminActions.php",{},function(responce){
+                    $(".contentRow").fadeToggle(700,function(){
+                        $(".contentRow").html(responce);
+                        $(".contentRow").fadeToggle(700,function(){                    
+                            navNotAnimate=true;
+                        });
+                    }); 
+               });
+            }
+            else
+            {
+                alert(data);
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+
+$(document).on("submit",".admActionUpdate",function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        url: "../scriptsPHP/updateAction.php",
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            if(data=="true")
+            {
+                navNotAnimate=false;
+                $.post("../content/adminActions.php",{},function(responce){
+                    $(".contentRow").fadeToggle(700,function(){
+                        $(".contentRow").html(responce);
+                        $(".contentRow").fadeToggle(700,function(){                    
+                            navNotAnimate=true;
+                        });
+                    }); 
+               });
+            }
+            else
+            {
+                alert(data);
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+
+$(document).on("click",".deleteAction",function(){
+    var id = $(this).attr("actionId");
+    var image = $(this).attr("image");
+    $.post("../scriptsPHP/deleteAction.php",{id:id,image:image},function (data) {
+        if(data=="true")
+        {
+            navNotAnimate=false;
+            $.post("../content/adminActions.php",{},function(responce){
+                $(".contentRow").fadeToggle(700,function(){
+                    $(".contentRow").html(responce);
+                    $(".contentRow").fadeToggle(700,function(){                    
+                        navNotAnimate=true;
+                    });
+                }); 
+           });
+        }
+        else
+        {
+            alert(data);
+        }
+    });
+});
+
+$(document).on("submit",".offerForm",function(event){
+    event.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        url: "../scriptsPHP/updateOffer.php",
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            if(data=="true")
+            {
+                navNotAnimate=false;
+                var state=$(".stateId").val();
+                var phone=$(".phone").val();
+                var searchOfferId=$(".searchOfferId").val();
+                $.post("../content/adminOffers.php",{state:state,phone:phone,searchOfferId:searchOfferId},function(responce){
+                    $(".contentRow").fadeToggle(700,function(){
+                        $(".contentRow").html(responce);
+                        $(".contentRow").fadeToggle(700,function(){                    
+                            navNotAnimate=true;
+                        });
+                    }); 
+               });
+            }
+            else
+            {
+                alert(data);
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+
+$(document).on("click",".updateOfferState",function(){
+    var offerId = $(this).attr("offerId");
+    var stateId = $(this).attr("state");
+    $.post("../scriptsPHP/updateState.php",{offerId:offerId,stateId:stateId},function (data) {
+        if(data=="true")
+        {
+            navNotAnimate=false;
+            var state=$(".stateId").val();
+            var phone=$(".phone").val();
+            var searchOfferId=$(".searchOfferId").val();
+            $.post("../content/adminOffers.php",{state:state,phone:phone,searchOfferId:searchOfferId},function(responce){
+                $(".contentRow").fadeToggle(700,function(){
+                    $(".contentRow").html(responce);
+                    $(".contentRow").fadeToggle(700,function(){                    
+                        navNotAnimate=true;
+                    });
+                }); 
+           });
+        }
+        else
+        {
+             alert(data);
+        }
+    });
+});
+
+$(document).on("submit",".passwordForm",function(event){
+    event.preventDefault();
+    var password = $(".password").val();
+    $.post("../scriptsPHP/login.php",{password:password},function (data) {
+        if(data=="true")
+        {
+            window.location.href = "catalog.php";
+        }
+        else
+        {
+             alert(data);
+        }
+    });
 });

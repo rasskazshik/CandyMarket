@@ -26,21 +26,24 @@ session_start();
         <div class="headerAdm">
             <div class="row">
                 <div class="logo col-12">
-                    <div>Магазин Аленка - товары</div>
+                    <div>Магазин Аленка - авторизация</div>
                 </div>             
             </div>
             <!--навигация-->
             <div class="row navigation no-gutters">
-                <a href="index.php" class="col-md container"><div>Товары</div></a>
+                <a href="catalog.php" class="col-md container"><div>Товары</div></a>
                 <a href="offers.php" class="col-md container"><div>Заказы</div></a>
-                <a href="actions.php" class="col-md container"><div>Акции</div></a>
+                <a href="actions.php" class="col-md container"><div>Новости</div></a>
             </div>  
         </div>
         <!--контейнер для выгрузки контента-->
         <div class="row no-gutters content contentRow">
-<?php
-    require_once '../content/adminCatalog.php';
-?>
+            <div class="col passwordContainer">
+                <form class="container passwordForm">
+                    <input type="Password" class="password" name="password" placeholder="Введите пароль" required="">
+                    <input type="submit" value="Войти">
+                </form>
+            </div>
         </div>
     </div>   
 </body>

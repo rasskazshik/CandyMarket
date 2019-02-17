@@ -53,7 +53,7 @@ print<<<END
         <input type="text" class="address" required placeholder="Адрес для доставки заказа">
         <input type="text" class="phone" required placeholder="Телефон для уточнения деталей заказа">
         <p>Отправляя заявку Вы соглашаетесь на хранение и обработку Ваших персональных данных. Они будут использованы исключительно для связи с Вами и осуществления доставки товара.</p>
-        <input type="submit" value="Отправить заявку">
+        <input class="offerListSubmit" type="submit" value="Отправить заявку">
     </form>
 </div>
 END;
